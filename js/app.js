@@ -1,111 +1,56 @@
-/**
- * 应用主入口
- * 负责初始化整个应用
- */
-
 (function() {
-    'use strict';
-
-    /**
-     * 应用初始化
-     */
-    function init() {
-        // 检查是否首次使用
-        if (Storage.isFirstUse()) {
-            // 显示欢迎页
-            showWelcomeScreen();
-        } else {
-            // 初始化主界面
-            initMainScreen();
-        }
-        
-        // 初始化UI模块
+    // 页面加载完成初始化
+    document.addEventListener('DOMContentLoaded', function() {
         UI.init();
         
-        console.log('大大王&皮皮虾 已启动 ❤️');
-    }
+        if (Storage.isFirstUse()) {
+            // 显示欢迎页
+            document.getElementById('welcome-screen').classList.remove('hidden');
+            document.getElementById('main-screen').classList.add('hidden');
+            
+            // 设置默认日期为今天
+            document.getElementById('love-date').value = new Date().toISOString().split('T')[0];
+            
+            // 开始按钮
+            document.getElementById('start-btn').addEventListener('click', function() {
+                const myName = document.getElementById('your-name').value.trim();
+                const partnerName = document.getElementById('partner-name').value.trim();
+                const loveDate = document.getElementById('love-date').value;
+                
+                if (!myName) { UI.showToast('请输入你的名字'); return; }
+                if (!partnerName) { UI.showToast('请输入TA的名字'); return; }
+                if (!loveDate) { UI.showToast('请选择在一起的日期'); return; }
+                
+                Storage.saveUserProfile({ myName, partnerName, startDate: loveDate });
+                Storage.addAnniversary({ name: '在一起纪念日', date: loveDate, type: 'anniversary' });
+                
+                initMainScreen();
+                UI.showToast('欢迎回来！');
+            });
+        } else {
+            initMainScreen();
+        }
+    });
 
-    /**
-     * 显示欢迎页
-     */
-    function showWelcomeScreen() {
-        const welcomeScreen = document.getElementById('welcome-screen');
-        const mainScreen = document.getElementById('main-screen');
-        
-        if (welcomeScreen) {
-            welcomeScreen.classList.remove('hidden');
-        }
-        if (mainScreen) {
-            mainScreen.classList.add('hidden');
-        }
-        
-        // 设置默认日期为今天
-        const dateInput = document.getElementById('love-date');
-        if (dateInput) {
-            const today = new Date();
-            const formattedDate = today.toISOString().split('T')[0];
-            dateInput.value = formattedDate;
-        }
-    }
-
-    /**
-     * 初始化主界面
-     */
     function initMainScreen() {
-        const welcomeScreen = document.getElementById('welcome-screen');
-        const mainScreen = document.getElementById('main-screen');
+        document.getElementById('welcome-screen').classList.add('hidden');
+        document.getElementById('lock-screen').classList.add('hidden');
+        document.getElementById('main-screen').classList.remove('hidden');
         
-        if (welcomeScreen) {
-            welcomeScreen.classList.add('hidden');
-        }
-        if (mainScreen) {
-            mainScreen.classList.remove('hidden');
-        }
+        const profile = Storage.getUserProfile();
         
-        // 获取用户配置
-        const userProfile = Storage.getUserProfile();
+        // 更新界面
+        document.getElementById('user-name').textContent = profile.myName || '我';
+        document.getElementById('partner-name-display').textContent = (profile.partnerName || 'TA') + ' ❤️';
         
-        if (userProfile.startDate) {
-            // 初始化计时器
-            Timer.init(userProfile.startDate, UI.updateTimerDisplay);
+        // 初始化计时器
+        if (profile.startDate) {
+            Timer.init(profile.startDate, UI.updateTimerDisplay);
         }
         
-        // 更新界面显示
-        const userNameEl = document.getElementById('user-name');
-        const partnerNameDisplay = document.getElementById('partner-name-display');
-        
-        if (userNameEl) {
-            userNameEl.textContent = userProfile.myName || '我';
-        }
-        if (partnerNameDisplay) {
-            partnerNameDisplay.textContent = `${userProfile.partnerName || 'TA'} ❤️`;
-        }
-        
-        // 渲染纪念日和动态
-        UI.renderAnniversaries();
-        UI.renderMoments();
-    }
-
-    /**
-     * 全局错误处理
-     */
-    window.addEventListener('error', function(event) {
-        console.error('应用错误:', event.error);
-        UI.showToast('发生了错误，请刷新页面重试');
-    });
-
-    /**
-     * 处理未处理的Promise拒绝
-     */
-    window.addEventListener('unhandledrejection', function(event) {
-        console.error('未处理的Promise错误:', event.reason);
-        event.preventDefault();
-    });
-
-    // DOM加载完成后初始化
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
+        // 刷新内容
+        UI.refreshAnniversaries();
+        UI.refreshMoments();
+        UI.refreshPhotos();
     }
 })();
