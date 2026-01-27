@@ -1,0 +1,65 @@
+{
+  "appConfig": {
+    "theme": "warm",           // 主题：warm/romantic/elegant
+    "language": "zh-CN"        // 语言设置
+  },
+  
+  "userProfile": {
+    "id": "uuid",
+    "name": "大大王",          // 用户名称
+    "nickname": "大王",        // 昵称
+    "avatar": null,            // 头像URL
+    "gender": "male",          // 性别
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  },
+  
+  "relationship": {
+    "startDate": "2024-01-01T00:00:00.000Z",  // 恋爱开始时间
+    "partnerId": "uuid",       // 恋人ID
+    "partnerName": "皮皮虾",   // 恋人名称
+    "anniversaries": [         // 纪念日列表
+      {
+        "id": "uuid",
+        "name": "第一次约会",
+        "date": "2024-02-14",
+        "type": "anniversary"  // anniversary/birthday/custom
+      }
+    ]
+  },
+  
+  "diaries": [                 // 日记列表
+    {
+      "id": "uuid",
+      "content": "今天是我们在一起的第100天...",
+      "mood": "happy",         // 心情：happy/loved/grateful/peaceful
+      "weather": "sunny",
+      "date": "2024-04-10",
+      "images": [],            // 图片URL数组
+      "createdAt": "2024-04-10T10:30:00.000Z",
+      "updatedAt": "2024-04-10T10:30:00.000Z",
+      "isShared": true         // 是否分享给恋人
+    }
+  ],
+  
+  "moments": [                 // 互动动态
+    {
+      "id": "uuid",
+      "type": "message",       // message/photo/milestone/gift
+      "fromUserId": "uuid",
+      "toUserId": "uuid",
+      "content": "想你啦～",
+      "createdAt": "2024-04-10T10:30:00.000Z",
+      "isRead": false
+    }
+  ],
+  
+  "timeCapsule": [             // 时光胶囊
+    {
+      "id": "uuid",
+      "content": "一年后的我们...",
+      "openDate": "2025-04-10",
+      "createdAt": "2024-04-10T10:30:00.000Z",
+      "isOpened": false
+    }
+  ]
+}

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="大大王&皮皮虾 - 恋爱纪念册">
+    <meta name="theme-color" content="#FFB6C1">
+    <title>大大王 & 皮皮虾 ❤️</title>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+    <!-- 引入Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+    <!-- 主样式 -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- 背景层 - 渐变柔光效果 -->
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="light-rays"></div>
+    </div>
+
+    <!-- 主应用容器 -->
+    <div id="app" class="app-container">
+        
+        <!-- 引导页 - 首次使用 -->
+        <section id="welcome-screen" class="screen welcome-screen hidden">
+            <div class="welcome-content fade-in">
+                <div class="logo-container">
+                    <div class="heart-logo">
+                        <svg viewBox="0 0 100 100" class="heart-svg">
+                            <path d="M50 88.5L16.5 55C8.5 47 8.5 33.5 16.5 25.5C24.5 17.5 38 17.5 46 25.5L50 29.5L54 25.5C62 17.5 75.5 17.5 83.5 25.5C91.5 33.5 91.5 47 83.5 55L50 88.5Z" 
+                                  fill="url(#heart-gradient)"/>
+                            <defs>
+                                <linearGradient id="heart-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FF9A9E;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#FECFEF;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h1 class="app-title">大大王 & 皮皮虾</h1>
+                    <p class="app-slogan">记录我们的每一刻美好</p>
+                </div>
+                
+                <div class="welcome-form">
+                    <div class="input-group fade-in-delay-1">
+                        <label for="your-name">你的名字</label>
+                        <input type="text" id="your-name" placeholder="大大王" maxlength="20">
+                    </div>
+                    <div class="input-group fade-in-delay-2">
+                        <label for="partner-name">TA的名字</label>
+                        <input type="text" id="partner-name" placeholder="皮皮虾" maxlength="20">
+                    </div>
+                    <div class="input-group fade-in-delay-3">
+                        <label for="love-date">在一起的日期</label>
+                        <input type="date" id="love-date">
+                    </div>
+                    <button id="start-btn" class="btn-primary fade-in-delay-4">
+                        开始我们的故事
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 主界面 -->
+        <section id="main-screen" class="screen main-screen">
+            <!-- 顶部导航 -->
+            <header class="header">
+                <div class="header-left">
+                    <button id="menu-btn" class="icon-btn">
+                        <i class="ri-menu-line"></i>
+                    </button>
+                </div>
+                <div class="header-center">
+                    <h1 class="header-title">大大王 & 皮皮虾</h1>
+                </div>
+                <div class="header-right">
+                    <button id="settings-btn" class="icon-btn">
+                        <i class="ri-settings-3-line"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- 恋爱计时卡片 -->
+            <div class="timer-card">
+                <div class="timer-label">我们在一起</div>
+                <div class="timer-display">
+                    <div class="timer-unit">
+                        <span class="timer-value" id="years">0</span>
+                        <span class="timer-text">年</span>
+                    </div>
+                    <div class="timer-separator">:</div>
+                    <div class="timer-unit">
+                        <span class="timer-value" id="months">0</span>
+                        <span class="timer-text">月</span>
+                    </div>
+                    <div class="timer-separator">:</div>
+                    <div class="timer-unit">
+                        <span class="timer-value" id="days">0</span>
+                        <span class="timer-text">天</span>
+                    </div>
+                    <div class="timer-separator-small">/</div>
+                    <div class="timer-unit-small">
+                        <span class="timer-value" id="hours">00</span>
+                        <span class="timer-text">时</span>
+                    </div>
+                    <div class="timer-separator-small">:</div>
+                    <div class="timer-unit-small">
+                        <span class="timer-value" id="minutes">00</span>
+                        <span class="timer-text">分</span>
+                    </div>
+                    <div class="timer-separator-small">:</div>
+                    <div class="timer-unit-small">
+                        <span class="timer-value" id="seconds">00</span>
+                        <span class="timer-text">秒</span>
+                    </div>
+                </div>
+                <div class="timer-subtitle" id="days-count">我们已经一起走过了 <span class="highlight">0</span> 天</div>
+            </div>
+
+            <!-- 快捷操作栏 -->
+            <div class="quick-actions">
+                <button class="action-btn" data-action="diary">
+                    <i class="ri-edit-line"></i>
+                    <span>写日记</span>
+                </button>
+                <button class="action-btn" data-action="photo">
+                    <i class="ri-camera-line"></i>
+                    <span>传照片</span>
+                </button>
+                <button class="action-btn" data-action="moment">
+                    <i class="ri-heart-line"></i>
+                    <span>发动态</span>
+                </button>
+                <button class="action-btn" data-action="capsule">
+                    <i class="ri-time-line"></i>
+                    <span>时光胶囊</span>
+                </button>
+            </div>
+
+            <!-- 纪念日倒计时 -->
+            <div class="section-card anniversary-card">
+                <div class="card-header">
+                    <h2><i class="ri-calendar-event-line"></i> 即将到来的纪念日</h2>
+                </div>
+                <div class="anniversary-list" id="anniversary-list">
+                    <!-- 动态填充 -->
+                </div>
+            </div>
+
+            <!-- 今日回忆 -->
+            <div class="section-card memory-card">
+                <div class="card-header">
+                    <h2><i class="ri-image-line"></i> 今日回忆</h2>
+                </div>
+                <div class="memory-content" id="today-memories">
+                    <div class="memory-empty">
+                        <i class="ri-photo-album-line"></i>
+                        <p>今天还没有记录哦～</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最新动态 -->
+            <div class="section-card moments-card">
+                <div class="card-header">
+                    <h2><i class="ri-heart-pulse-line"></i> 我们的动态</h2>
+                    <button class="view-all-btn" id="view-all-moments">查看全部</button>
+                </div>
+                <div class="moments-list" id="moments-list">
+                    <!-- 动态填充 -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 侧边抽屉 -->
+        <aside id="drawer" class="drawer">
+            <div class="drawer-overlay"></div>
+            <div class="drawer-content">
+                <div class="drawer-header">
+                    <div class="user-avatar">
+                        <i class="ri-user-heart-line"></i>
+                    </div>
+                    <div class="user-info">
+                        <h3 id="user-name">大大王</h3>
+                        <p id="partner-name-display">皮皮虾 ❤️</p>
+                    </div>
+                </div>
+                <nav class="drawer-nav">
+                    <a href="#" class="nav-item" data-page="home">
+                        <i class="ri-home-4-line"></i>
+                        <span>首页</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="diary">
+                        <i class="ri-book-open-line"></i>
+                        <span>日记本</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="photos">
+                        <i class="ri-gallery-line"></i>
+                        <span>相册</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="anniversaries">
+                        <i class="ri-calendar-check-line"></i>
+                        <span>纪念日</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="moments">
+                        <i class="ri-heart-line"></i>
+                        <span>互动动态</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="capsule">
+                        <i class="ri-time-line"></i>
+                        <span>时光胶囊</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="backup">
+                        <i class="ri-download-2-line"></i>
+                        <span>导出备份</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="about">
+                        <i class="ri-information-line"></i>
+                        <span>关于</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- 模态框容器 -->
+        <div id="modal-container" class="modal-container">
+            <!-- 写日记模态框 -->
+            <div id="diary-modal" class="modal">
+                <div class="modal-header">
+                    <h3>记录今日美好</h3>
+                    <button class="close-btn"><i class="ri-close-line"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mood-selector">
+                        <span class="mood-label">今天的心情</span>
+                        <div class="mood-options">
+                            <button class="mood-btn" data-mood="happy" title="开心">
+                                <i class="ri-emotion-happy-line"></i>
+                            </button>
+                            <button class="mood-btn" data-mood="loved" title="被爱">
+                                <i class="ri-heart-line"></i>
+                            </button>
+                            <button class="mood-btn" data-mood="grateful" title="感恩">
+                                <i class="ri-seedling-line"></i>
+                            </button>
+                            <button class="mood-btn" data-mood="peaceful" title="平静">
+                                <i class="ri-mind-map-line"></i>
+                            </button>
+                            <button class="mood-btn" data-mood="excited" title="激动">
+                                <i class="ri-flashlight-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="diary-content" placeholder="今天发生了什么开心的事呢..." maxlength="2000"></textarea>
+                    <div class="photo-upload">
+                        <input type="file" id="diary-photos" accept="image/*" multiple hidden>
+                        <button class="upload-btn">
+                            <i class="ri-image-add-line"></i>
+                            <span>添加照片</span>
+                        </button>
+                        <div class="photo-preview" id="photo-preview"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" id="save-draft">保存草稿</button>
+                    <button class="btn-primary" id="publish-diary">发布</button>
+                </div>
+            </div>
+
+            <!-- 动态发布模态框 -->
+            <div id="moment-modal" class="modal">
+                <div class="modal-header">
+                    <h3>发布动态</h3>
+                    <button class="close-btn"><i class="ri-close-line"></i></button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="moment-content" placeholder="想对TA说..." maxlength="280"></textarea>
+                    <div class="quick-messages">
+                        <button class="quick-msg-btn" data-msg="想你啦">想你啦 ❤️</button>
+                        <button class="quick-msg-btn" data-msg="今天超开心">今天超开心 🌟</button>
+                        <button class="quick-msg-btn" data-msg="爱你哟">爱你哟 💕</button>
+                        <button class="quick-msg-btn" data-msg="晚安">晚安 🌙</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary" id="publish-moment">发送</button>
+                </div>
+            </div>
+
+            <!-- 设置模态框 -->
+            <div id="settings-modal" class="modal">
+                <div class="modal-header">
+                    <h3>设置</h3>
+                    <button class="close-btn"><i class="ri-close-line"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="settings-group">
+                        <h4>基本信息</h4>
+                        <div class="setting-item">
+                            <label>我的名字</label>
+                            <input type="text" id="setting-my-name" maxlength="20">
+                        </div>
+                        <div class="setting-item">
+                            <label>TA的名字</label>
+                            <input type="text" id="setting-partner-name" maxlength="20">
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h4>恋爱纪念日</h4>
+                        <div class="setting-item">
+                            <label>在一起的日子</label>
+                            <input type="date" id="setting-love-date">
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h4>外观</h4>
+                        <div class="setting-item">
+                            <label>主题</label>
+                            <select id="setting-theme">
+                                <option value="warm">温暖</option>
+                                <option value="romantic">浪漫</option>
+                                <option value="elegant">优雅</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary" id="save-settings">保存</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部导航栏 (移动端) -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-link active" data-page="home">
+                <i class="ri-home-4-line"></i>
+                <span>首页</span>
+            </a>
+            <a href="#" class="nav-link" data-page="diary">
+                <i class="ri-book-open-line"></i>
+                <span>日记</span>
+            </a>
+            <a href="#" class="nav-link" data-page="moments">
+                <i class="ri-heart-line"></i>
+                <span>动态</span>
+            </a>
+            <a href="#" class="nav-link" data-page="profile">
+                <i class="ri-user-line"></i>
+                <span>我的</span>
+            </a>
+        </nav>
+
+        <!-- Toast 提示 -->
+        <div id="toast" class="toast">
+            <span class="toast-message"></span>
+        </div>
+
+        <!-- Loading 遮罩 -->
+        <div id="loading" class="loading-overlay">
+            <div class="loading-spinner">
+                <div class="spinner-heart">
+                    <i class="ri-heart-fill"></i>
+                </div>
+                <p>Loading...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 引入主应用脚本 -->
+    <script src="js/storage.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/diary.js"></script>
+    <script src="js/moments.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
