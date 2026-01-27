@@ -6,7 +6,10 @@ const Moments = (function() {
         return { success: true, moment };
     }
 
-    function getList(limit = 20) { return Storage.getMoments().slice(0, limit); }
+    function getList(limit) { 
+        const list = Storage.getMoments();
+        return limit ? list.slice(0, limit) : list; 
+    }
 
     function renderCard(moment) {
         const date = new Date(moment.createdAt);
@@ -20,15 +23,6 @@ const Moments = (function() {
                 <div class="moment-content">${escapeHtml(moment.content)}</div>
             </div>
         `;
-    }
-
-    function renderList(moments, container) {
-        if (!container) return;
-        if (moments.length === 0) {
-            container.innerHTML = '<div class="empty-state"><p>还没有动态</p></div>';
-            return;
-        }
-        container.innerHTML = moments.map(m => renderCard(m)).join('');
     }
 
     function getTimeAgo(date) {
@@ -49,5 +43,5 @@ const Moments = (function() {
         return div.innerHTML;
     }
 
-    return { publish, getList, renderCard, renderList };
+    return { publish, getList, renderCard };
 })();

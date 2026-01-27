@@ -40,14 +40,17 @@ const Storage = (function() {
     }
 
     function getUserProfile() { return getData().userProfile; }
+    
     function saveUserProfile(profile) {
         const data = getData();
         data.userProfile = { ...data.userProfile, ...profile };
         return saveData(data);
     }
+    
     function isFirstUse() { return !getData().userProfile.startDate; }
     
     function getDiaries() { return getData().diaries; }
+    
     function addDiary(diary) {
         const data = getData();
         const newDiary = { id: generateUUID(), ...diary, createdAt: new Date().toISOString() };
@@ -55,6 +58,7 @@ const Storage = (function() {
         saveData(data);
         return newDiary;
     }
+    
     function deleteDiary(id) {
         const data = getData();
         data.diaries = data.diaries.filter(d => d.id !== id);
@@ -64,6 +68,7 @@ const Storage = (function() {
     function getAnniversaries() {
         return getData().anniversaries.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
+    
     function addAnniversary(anniversary) {
         const data = getData();
         const newAnniversary = { id: generateUUID(), ...anniversary };
@@ -71,6 +76,7 @@ const Storage = (function() {
         saveData(data);
         return newAnniversary;
     }
+    
     function deleteAnniversary(id) {
         const data = getData();
         data.anniversaries = data.anniversaries.filter(a => a.id !== id);
@@ -78,6 +84,7 @@ const Storage = (function() {
     }
 
     function getMoments() { return getData().moments; }
+    
     function addMoment(moment) {
         const data = getData();
         const newMoment = { id: generateUUID(), ...moment, createdAt: new Date().toISOString() };
@@ -87,6 +94,7 @@ const Storage = (function() {
     }
 
     function getCapsules() { return getData().capsules; }
+    
     function addCapsule(capsule) {
         const data = getData();
         const newCapsule = { id: generateUUID(), ...capsule, createdAt: new Date().toISOString(), isOpened: false };
@@ -94,14 +102,19 @@ const Storage = (function() {
         saveData(data);
         return newCapsule;
     }
+    
     function openCapsule(id) {
         const data = getData();
         const capsule = data.capsules.find(c => c.id === id);
-        if (capsule) { capsule.isOpened = true; saveData(data); }
+        if (capsule) {
+            capsule.isOpened = true;
+            saveData(data);
+        }
         return capsule;
     }
 
     function getPhotos() { return getData().photos; }
+    
     function addPhoto(photoData) {
         const data = getData();
         data.photos.push({ id: generateUUID(), ...photoData, createdAt: new Date().toISOString() });
