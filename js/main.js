@@ -96,9 +96,14 @@ function startTimer(dateStr) {
         const seconds = totalSeconds % 60;
         const minutes = Math.floor(totalSeconds / 60) % 60;
         const hours = Math.floor(totalSeconds / 3600) % 24;
-        const years = now.getFullYear() - startDate.getFullYear();
-        const months = now.getMonth() - startDate.getMonth() + years * 12;
-        const days = totalDays % 30;
+        
+        // 修改：按实际天数计算年份，365天为一年
+        const years = Math.floor(totalDays / 365);
+        // 剩余天数
+        const remainingDays = totalDays % 365;
+        // 计算月数（按30天为一个月）
+        const months = Math.floor(remainingDays / 30);
+        const days = remainingDays % 30;
         
         document.getElementById('years').textContent = years;
         document.getElementById('months').textContent = months;
@@ -113,6 +118,7 @@ function startTimer(dateStr) {
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(update, 1000);
 }
+
 
 // 刷新首页
 function refreshHome() {
